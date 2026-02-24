@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Admin Access | AMS Control Center</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .bg-gradient-mesh {
+            background-color: #101922;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(19, 127, 236, 0.15) 0, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(19, 127, 236, 0.1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(19, 127, 236, 0.05) 0, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(19, 127, 236, 0.1) 0, transparent 50%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .input-glass {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+
+        .input-glass:focus {
+            border-color: #137fec;
+            background: rgba(19, 127, 236, 0.03);
+            box-shadow: 0 0 0 4px rgba(19, 127, 236, 0.1);
+        }
+
+        @keyframes pulse-subtle {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Bug Fix #3: Hide browser's native password reveal eye icon (black duplicate) */
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-mesh text-slate-100 min-h-screen flex flex-col items-center p-4 font-display">
+    <div class="w-full max-w-md py-12">
+        <!-- Brand/Access Label -->
+        <div class="text-center mb-8 animate-pulse-subtle">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-primary text-[10px] font-bold uppercase tracking-widest mb-4">
+                <span class="material-icons text-[10px]">security</span>
+                Administrative Access Only
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight">AMS Admin</h1>
+            <p class="text-slate-400 mt-2 text-sm">Control center for attendance & system security</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="glass-panel p-8 rounded-2xl shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+
+            <form id="adminLoginForm" class="space-y-6 relative z-10">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"
+                        for="username">Username</label>
+                    <div class="relative group">
+                        <span
+                            class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg group-focus-within:text-primary transition-colors">person</span>
+                        <input id="username"
+                            class="w-full pl-10 pr-4 py-3 input-glass rounded-xl text-sm focus:outline-none"
+                            placeholder="Enter username" required type="text" maxlength="50" pattern="[a-zA-Z0-9]+"
+                            autocomplete="off" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"
+                        for="password">Password</label>
+                    <div class="relative group">
+                        <span
+                            class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg group-focus-within:text-primary transition-colors">lock</span>
+                        <input id="password"
+                            class="w-full pl-10 pr-12 py-3 input-glass rounded-xl text-sm focus:outline-none"
+                            placeholder="Enter password" required type="password" maxlength="100" autocomplete="off" />
+                        <button id="togglePassword" type="button"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
+                            <span class="material-icons text-xl">visibility</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between text-xs">
+                    <!-- BUG #3: Improved alignment for checkbox and label -->
+                    <label class="flex items-center gap-3 cursor-pointer text-slate-400 hover:text-slate-300">
+                        <input id="rememberSession"
+                            class="w-4 h-4 rounded bg-white/5 border-white/10 text-primary focus:ring-primary focus:ring-offset-0 m-0"
+                            type="checkbox" />
+                        <span class="leading-none">Remember session</span>
+                    </label>
+                    <!-- BUG #4: Placeholder action for Forgot access -->
+                    <a class="text-primary hover:underline font-medium" href="javascript:void(0)"
+                        onclick="showToast('Please contact system administrator for access recovery.', 'error')">Forgot
+                        access?</a>
+                </div>
+
+                <!-- Error Container -->
+                <div id="loginErrorContainer"
+                    class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-2">
+                    <span class="material-icons text-red-500 text-sm mt-0.5">error_outline</span>
+                    <p id="loginErrorMessage" class="text-[11px] text-red-500 font-medium"></p>
+                </div>
+
+                <button id="adminLoginBtn" type="submit" disabled
+                    class="w-full py-4 bg-slate-700 text-slate-500 font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-not-allowed opacity-60"
+                    title="Check 'Remember session' to enable login">
+                    <span class="material-icons text-sm">login</span>
+                    AUTHORIZE & LOG IN
+                </button>
+            </form>
+        </div>
+
+        <!-- Branded Footer -->
+        <footer class="mt-12 text-slate-500 text-sm flex flex-col items-center gap-4 px-4 text-center">
+            <div class="h-px w-24 bg-white/10"></div>
+            <div class="flex flex-col items-center gap-2">
+                <!-- BUG #13: Removed duplicate "Verified" in text -->
+                <p>© Copyright Unlimited | Implementation by Surendra (IT2569)</p>
+                <div
+                    class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-primary/20 shrink-0">
+                    <span class="material-icons text-[12px]">verified</span>
+                    Verified
+                </div>
+            </div>
+            <a class="hover:text-white transition-colors flex items-center justify-center gap-1 mt-4" href="index.html">
+                <span class="material-icons text-sm">arrow_back</span>
+                Return to Public Portal
+            </a>
+        </footer>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

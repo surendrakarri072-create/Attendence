@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin IP Review Detail - AMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .mono-font {
+            font-family: 'ui-monospace', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4 lg:p-8">
+<!-- Modal Container -->
+<div class="w-full max-w-6xl glass-panel rounded-xl shadow-2xl overflow-hidden flex flex-col h-[90vh]">
+<!-- Header -->
+<header class="p-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/5">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Student Profile" class="w-16 h-16 rounded-lg object-cover border-2 border-primary" data-alt="Professional portrait of a male student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqcqRk3fdFc1_fWKH7WQF-YUoP5OM99mwzwps5Y2QSWidgYLKTLbWXUFPjhXAVmmMgl9nA21xbDZn1M5J5Rtg8G4cNzOxyshlKu-WQ16-Ht9tYKFqv_qDv7nAw7Qt2MnkJUjc9Hlpa8-_2bYyNFnoDLXZ1OmcvQaLaNeyV36Ej00cBblQDZw1RlqWmoqbbJ3OFxB-gKXeDp9pL_ox-qfkLWiug0S_IC-7bHWdH71oakLFBCY7dNgcxwH54oN1FyTMvUFQcNstHounW"/>
+<div class="absolute -bottom-1 -right-1 bg-primary text-white p-1 rounded-full text-[10px] font-bold">VER</div>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight">Marcus Thompson</h1>
+<p class="text-sm text-slate-400">Roll: <span class="text-slate-200">CS-2024-8842</span> • <span class="text-slate-200">B.Tech CS</span></p>
+<div class="mt-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-500 text-xs font-medium border border-yellow-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                        Pending Review
+                    </div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400">
+<span class="material-icons">more_vert</span>
+</button>
+<button class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400">
+<span class="material-icons">close</span>
+</button>
+</div>
+</header>
+<!-- Main Body - Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Primary Review Data -->
+<div class="lg:col-span-7 space-y-8">
+<!-- IP Meta Info -->
+<section>
+<h2 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Requested Access Point</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="glass-card p-4 rounded-lg">
+<p class="text-xs text-slate-400 mb-1">IP Address</p>
+<p class="text-2xl font-bold mono-font text-primary">192.168.12.204</p>
+<div class="mt-2 flex items-center gap-2 text-xs text-green-500">
+<span class="material-icons text-sm">security</span>
+                                Static IPv4 Address
+                            </div>
+</div>
+<div class="glass-card p-4 rounded-lg">
+<p class="text-xs text-slate-400 mb-1">Service Provider</p>
+<p class="text-lg font-semibold">Verizon Business</p>
+<p class="text-xs text-slate-500">ASN: AS701 (MCI Communications)</p>
+</div>
+</div>
+</section>
+<!-- Location Insight -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xs font-bold uppercase tracking-widest text-slate-500">Geographic Context</h2>
+<span class="text-xs text-primary font-medium flex items-center gap-1">
+<span class="material-icons text-sm">my_location</span>
+                            Precision: 98%
+                        </span>
+</div>
+<div class="glass-card rounded-lg overflow-hidden flex h-32">
+<div class="w-1/3 p-4 flex flex-col justify-center border-r border-white/10">
+<p class="text-2xl font-bold">San Francisco</p>
+<p class="text-sm text-slate-400">California, USA</p>
+</div>
+<div class="w-2/3 bg-slate-800 relative">
+<img alt="Map View" class="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-500" data-alt="Abstract dark stylized city map of San Francisco" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzo6l5E6J4YPWxlz6KA3xaJeUjWus1niBeVgl_8wpTwwdL1L0vpAnvHHc9saqwL3oaZ6llmrZDfYer_osh7N7PorRI5RzJTIVsKIxfnpHaVFxblytfDVkEgIawDWlfaSymQaIy0D7pInd5nX-Jzjd5LSKBQ7RaLFBLucVpEUPlnVUDSiQh7ZVzRjtOIYWE99tBg7zKxUc5Uc_kExhsQxfL-Yy6PVofgqarMXvc-sz5cTCn5BtZ76ZnkZopKiPsRlBrlAX3A2Emu2DF"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-icons text-primary text-4xl animate-bounce">location_on</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Student Justification -->
+<section>
+<h2 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Student Justification</h2>
+<div class="glass-card p-5 rounded-lg border-l-4 border-primary">
+<p class="text-sm leading-relaxed text-slate-300 italic">
+                            "I am requesting this IP registration for my off-campus research project. This is my home office static IP which I will use to access the GPU clusters. The previous IP (172.x.x.x) was dynamic and has since changed. I need consistent access for the next semester."
+                        </p>
+</div>
+</section>
+<!-- Device History Tabbed Area -->
+<section>
+<div class="flex items-center border-b border-white/10 mb-4">
+<button class="px-4 py-2 text-sm font-semibold border-b-2 border-primary text-primary">Device History</button>
+<button class="px-4 py-2 text-sm font-medium text-slate-500 hover:text-slate-300">Login Sessions</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="text-slate-500 border-b border-white/5">
+<th class="pb-3 font-medium">Date &amp; Time</th>
+<th class="pb-3 font-medium">IP Address</th>
+<th class="pb-3 font-medium">Device</th>
+<th class="pb-3 font-medium">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr>
+<td class="py-3 text-slate-400">Oct 24, 14:22</td>
+<td class="py-3 mono-font">172.58.12.11</td>
+<td class="py-3">MacBook Pro (macOS)</td>
+<td class="py-3"><span class="text-green-500">Success</span></td>
+</tr>
+<tr>
+<td class="py-3 text-slate-400">Oct 22, 09:15</td>
+<td class="py-3 mono-font">172.58.10.45</td>
+<td class="py-3">iPhone 15 Pro</td>
+<td class="py-3"><span class="text-green-500">Success</span></td>
+</tr>
+<tr>
+<td class="py-3 text-slate-400">Oct 20, 18:40</td>
+<td class="py-3 mono-font">45.23.112.8</td>
+<td class="py-3">Windows PC</td>
+<td class="py-3"><span class="text-red-500">Blocked</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Right Column: Sidebar Analysis -->
+<div class="lg:col-span-5 space-y-6">
+<!-- Conflict Detector -->
+<div class="bg-red-500/10 border border-red-500/20 p-5 rounded-xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-red-500/20 p-2 rounded-lg">
+<span class="material-icons text-red-500">warning</span>
+</div>
+<div>
+<h3 class="font-bold text-red-500">Conflict Detected</h3>
+<p class="text-xs text-red-400/80">Security risk identified</p>
+</div>
+</div>
+<p class="text-sm text-slate-300 mb-4">This IP address is currently registered to <strong>2 other students</strong>. This may indicate a shared network or proxy usage.</p>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-2 glass-card rounded-lg text-xs">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-slate-700 flex items-center justify-center">AJ</span>
+<span>A. Johnson (CS-8812)</span>
+</div>
+<span class="text-slate-500">Active</span>
+</div>
+<div class="flex items-center justify-between p-2 glass-card rounded-lg text-xs">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded bg-slate-700 flex items-center justify-center">SK</span>
+<span>S. Kapoor (EE-9021)</span>
+</div>
+<span class="text-slate-500">Expired</span>
+</div>
+</div>
+</div>
+<!-- Analysis Summary -->
+<div class="glass-panel p-5 rounded-xl space-y-4">
+<h3 class="font-bold text-sm">Automated Security Audit</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-400">VPN Detection</span>
+<span class="px-2 py-0.5 bg-green-500/10 text-green-500 rounded border border-green-500/20 font-medium">Clear</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-400">Tor Exit Node</span>
+<span class="px-2 py-0.5 bg-green-500/10 text-green-500 rounded border border-green-500/20 font-medium">Clear</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-400">Blacklist Status</span>
+<span class="px-2 py-0.5 bg-green-500/10 text-green-500 rounded border border-green-500/20 font-medium">Clean</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-400">Geolocation Match</span>
+<span class="px-2 py-0.5 bg-yellow-500/10 text-yellow-500 rounded border border-yellow-500/20 font-medium">Mismatch (12km)</span>
+</div>
+</div>
+</div>
+<!-- Activity Log -->
+<div class="p-5">
+<h3 class="font-bold text-sm mb-4">Internal Notes</h3>
+<div class="space-y-4 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[1px] before:bg-white/10">
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center">
+<span class="material-icons text-[12px] text-slate-500">person</span>
+</div>
+<p class="text-[11px] text-slate-500 mb-1">Oct 24, 15:10 by Admin_System</p>
+<p class="text-xs text-slate-300">Request flagged for manual review due to IP conflict with active student AJ.</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center">
+<span class="material-icons text-[12px] text-slate-500">history</span>
+</div>
+<p class="text-[11px] text-slate-500 mb-1">Oct 24, 14:55</p>
+<p class="text-xs text-slate-300">Request submitted by Marcus Thompson via Student Portal.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<footer class="p-6 border-t border-white/10 bg-black/40 backdrop-blur-md">
+<div class="flex flex-col md:flex-row gap-6 items-end">
+<div class="flex-1 w-full">
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2 tracking-wide" for="rejection-reason">Decision Commentary / Rejection Reason</label>
+<textarea class="w-full bg-white/5 border border-white/10 rounded-lg focus:ring-primary focus:border-primary text-sm p-3 placeholder-slate-600" id="rejection-reason" placeholder="Type reason for rejection or approval notes here..." rows="2"></textarea>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="px-6 py-2.5 rounded-lg border border-red-500/50 text-red-500 hover:bg-red-500/10 transition-colors font-semibold text-sm">
+                        Reject Request
+                    </button>
+<button class="px-8 py-2.5 rounded-lg bg-primary text-white hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 font-semibold text-sm flex items-center gap-2">
+<span class="material-icons text-sm">check_circle</span>
+                        Approve Access
+                    </button>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

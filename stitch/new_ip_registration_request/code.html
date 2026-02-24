@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New IP Registration Request | AMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .primary-glow {
+            box-shadow: 0 0 20px rgba(19, 236, 91, 0.15);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+<!-- Header -->
+<header class="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+<div>
+<nav class="flex items-center space-x-2 text-sm text-primary/70 mb-2">
+<span>Dashboard</span>
+<span class="material-icons text-xs">chevron_right</span>
+<span>Attendance Management</span>
+<span class="material-icons text-xs">chevron_right</span>
+<span class="text-primary font-medium">New IP Registration</span>
+</nav>
+<h1 class="text-3xl font-bold tracking-tight">New IP Registration</h1>
+<p class="mt-1 text-slate-400">Securely register your network endpoint for attendance verification.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full border border-primary/30 flex items-center justify-center bg-primary/10">
+<span class="material-icons text-primary">person</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Student Portal</p>
+<p class="text-xs text-slate-500">Academic Session 2024-25</p>
+</div>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Main Content Area (8 Columns) -->
+<div class="lg:col-span-8 space-y-8">
+<!-- 1. Current System Check Card -->
+<section class="glass-panel rounded-xl p-6 primary-glow overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-icons text-7xl text-primary">sensors</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-6">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<h2 class="text-lg font-semibold uppercase tracking-wider text-primary/80">Live Network Metadata</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-black/20 rounded-lg p-4 border border-white/5">
+<p class="text-xs text-slate-400 mb-1 uppercase tracking-tight">Public IPv4 Address</p>
+<div class="flex items-center justify-between">
+<span class="text-xl font-mono font-medium text-primary">192.168.42.108</span>
+<span class="material-icons text-sm text-slate-500 cursor-pointer hover:text-primary transition-colors">visibility</span>
+</div>
+</div>
+<div class="bg-black/20 rounded-lg p-4 border border-white/5">
+<p class="text-xs text-slate-400 mb-1 uppercase tracking-tight">Service Provider</p>
+<p class="text-lg font-medium">FiberNet Global Solutions</p>
+</div>
+<div class="bg-black/20 rounded-lg p-4 border border-white/5">
+<p class="text-xs text-slate-400 mb-1 uppercase tracking-tight">Approx. Location</p>
+<div class="flex items-center gap-1">
+<span class="material-icons text-sm text-primary">location_on</span>
+<p class="text-lg font-medium">San Francisco, US</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Status Tracker -->
+<section class="glass-panel rounded-xl p-6">
+<h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-8">Request Lifecycle</h2>
+<div class="relative">
+<!-- Progress Line -->
+<div class="absolute top-5 left-8 right-8 h-0.5 bg-white/10"></div>
+<div class="relative flex justify-between items-start">
+<div class="flex flex-col items-center group">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center z-10 mb-3 ring-4 ring-primary/20">
+<span class="material-icons text-background-dark text-xl">description</span>
+</div>
+<span class="text-sm font-medium text-primary">Submitted</span>
+<span class="text-[10px] text-slate-500">Current Step</span>
+</div>
+<div class="flex flex-col items-center group">
+<div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center z-10 mb-3 border border-white/10">
+<span class="material-icons text-slate-400 text-xl">rate_review</span>
+</div>
+<span class="text-sm font-medium text-slate-400">Under Review</span>
+<span class="text-[10px] text-slate-500">Est. 24h</span>
+</div>
+<div class="flex flex-col items-center group">
+<div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center z-10 mb-3 border border-white/10">
+<span class="material-icons text-slate-400 text-xl">verified_user</span>
+</div>
+<span class="text-sm font-medium text-slate-400">Finalized</span>
+<span class="text-[10px] text-slate-500">System Ready</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Registration Form -->
+<section class="glass-panel rounded-xl p-8">
+<h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+<span class="material-icons text-primary">edit_note</span>
+                        Request Details
+                    </h2>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-300" for="system-name">System Identifier</label>
+<input class="block w-full rounded-lg bg-white/5 border-white/10 text-white focus:border-primary focus:ring-primary focus:ring-opacity-50 px-4 py-3 transition-all placeholder:text-slate-600" id="system-name" name="system-name" placeholder="e.g. Home Laptop, Office PC" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-300" for="request-type">Connection Category</label>
+<select class="block w-full rounded-lg bg-white/5 border-white/10 text-white focus:border-primary focus:ring-primary focus:ring-opacity-50 px-4 py-3" id="request-type">
+<option class="bg-background-dark" value="residential">Residential Broadband</option>
+<option class="bg-background-dark" value="office">Office/Workspace</option>
+<option class="bg-background-dark" value="campus">External Campus Node</option>
+</select>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-300" for="reason">Justification</label>
+<textarea class="block w-full rounded-lg bg-white/5 border-white/10 text-white focus:border-primary focus:ring-primary focus:ring-opacity-50 px-4 py-3 transition-all placeholder:text-slate-600" id="reason" name="reason" placeholder="Briefly explain why you need to register this IP address..." rows="4"></textarea>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
+<button class="w-full sm:w-auto px-8 py-3 bg-primary hover:bg-primary/90 text-background-dark font-bold rounded-lg transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2" type="submit">
+<span class="material-icons">send</span>
+                                Submit Request
+                            </button>
+<button class="w-full sm:w-auto px-8 py-3 bg-white/5 hover:bg-white/10 text-slate-300 font-semibold rounded-lg transition-all border border-white/5" type="button">
+                                Cancel
+                            </button>
+</div>
+</form>
+</section>
+</div>
+<!-- Sidebar (4 Columns) -->
+<aside class="lg:col-span-4 space-y-6">
+<!-- Map Preview (Visual Context) -->
+<div class="glass-panel rounded-xl overflow-hidden h-48 relative border border-white/10">
+<img class="w-full h-full object-cover opacity-40 mix-blend-luminosity" data-alt="Stylized dark digital world map showing network nodes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUz1mnllYC-yRk3FaPbxFzb9Ia4HszqRBprw61MbKUDSD8AT2SF_84j7KfgxW7NUEe-24xNVLUc9KrSI2KQ46BBIkvL37tgNcw9VO1g5KANLDA2KnsY4F6c3apmIHWRTp1ONNHSZZ0q-_NKpLDr22EdZcyZ243Zw185K0B_JfWXF5vn5fE1B0wZOqiFA1PAdglKtzqRL9Tb6eIis8fAMfPYWPgjskuZ4OGDE9azniIEtoQIp-QlJNYsb0XWoSNfkzq4aPR5PrUsZiR"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<p class="text-xs text-primary font-bold uppercase tracking-widest">Network Location</p>
+<p class="text-lg font-semibold" data-location="San Francisco">San Francisco, California</p>
+</div>
+</div>
+<!-- Security Guidelines -->
+<section class="glass-panel rounded-xl p-6 border-l-4 border-l-primary">
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-icons text-primary">security</span>
+                        Security Guidelines
+                    </h3>
+<ul class="space-y-4 text-sm text-slate-400">
+<li class="flex gap-3">
+<span class="material-icons text-xs text-primary mt-1">check_circle</span>
+<p><strong class="text-slate-200">Personal Devices Only:</strong> Please do not register public library or cafe Wi-Fi IPs as they rotate frequently.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-icons text-xs text-primary mt-1">check_circle</span>
+<p><strong class="text-slate-200">No Active VPN:</strong> Ensure your VPN is disabled before submitting. Masked IPs will be automatically rejected.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-icons text-xs text-primary mt-1">check_circle</span>
+<p><strong class="text-slate-200">One Static IP:</strong> Residential dynamic IPs are accepted, but high-frequency changes may trigger re-verification.</p>
+</li>
+</ul>
+</section>
+<!-- Help Card -->
+<section class="glass-panel rounded-xl p-6">
+<div class="flex items-start gap-4">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-icons text-primary">help_outline</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-200 mb-1">Need Assistance?</h4>
+<p class="text-sm text-slate-400 mb-4">Having trouble detecting your IP or your ISP is showing incorrectly?</p>
+<a class="text-primary text-sm font-semibold flex items-center gap-1 hover:underline" href="#">
+                                Contact IT Support
+                                <span class="material-icons text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Information Notice -->
+<div class="p-4 rounded-xl border border-white/5 bg-white/5">
+<div class="flex items-center gap-2 mb-2 text-amber-500">
+<span class="material-icons text-sm">info</span>
+<span class="text-xs font-bold uppercase">Privacy Notice</span>
+</div>
+<p class="text-[11px] text-slate-500 leading-relaxed">
+                        Your IP data is stored securely and only used for attendance authentication. No browsing data or other network traffic is monitored or recorded by the AMS system.
+                    </p>
+</div>
+</aside>
+</div>
+<!-- Footer -->
+<footer class="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 text-sm">© 2024 Attendance Management System (AMS). All rights reserved.</p>
+<div class="flex gap-6 text-slate-500 text-sm">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Use</a>
+<a class="hover:text-primary transition-colors" href="#">System Status</a>
+</div>
+</footer>
+</div>
+</body></html>

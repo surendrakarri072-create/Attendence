@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Secure Login | AMS Student Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .bg-gradient-mesh {
+            background: radial-gradient(at 0% 0%, rgba(19, 127, 236, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(19, 127, 236, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(19, 127, 236, 0.05) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(19, 127, 236, 0.1) 0px, transparent 50%);
+        }
+
+        .hidden-important {
+            display: none !important;
+        }
+
+        /* Bug Fix #3: Hide browser's native password reveal eye icon (black duplicate) */
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear,
+        input[type="password"]::-webkit-contacts-auto-fill-button,
+        input[type="password"]::-webkit-credentials-auto-fill-button {
+            display: none !important;
+        }
+
+        /* Edge / Chromium native eye icon */
+        input::-ms-reveal {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col items-center p-4 bg-gradient-mesh">
+    <div class="w-full max-w-md py-12">
+        <!-- Logo & Header -->
+        <div class="text-center mb-8">
+            <div
+                class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 mb-4 border border-primary/20">
+                <span class="material-icons text-primary text-3xl">security</span>
+            </div>
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Student Portal</h1>
+            <p class="text-slate-500 dark:text-slate-400 mt-1">Verify your identity and network status</p>
+        </div>
+
+        <!-- Main Login Card -->
+        <div
+            class="bg-white dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl overflow-hidden">
+            <!-- Unauthorized Alert Banner (Visible when IP fails) -->
+            <div id="ipAlertBanner"
+                class="bg-red-500/10 border-b border-red-500/20 p-4 hidden flex items-start space-x-3">
+                <span class="material-icons text-red-500 text-sm mt-0.5">error_outline</span>
+                <div>
+                    <h3 class="text-sm font-semibold text-red-500">Unauthorized System!</h3>
+                    <p id="ipAlertText" class="text-xs text-red-400/80 mt-1">Login denied. Your current IP is not
+                        registered in the whitelist.</p>
+                </div>
+            </div>
+
+            <form id="userLoginForm" class="p-8 space-y-6">
+                <!-- Roll Number Input -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="rollNumber">Roll
+                        Number</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span
+                                class="material-icons text-slate-400 group-focus-within:text-primary transition-colors text-xl">badge</span>
+                        </div>
+                        <input
+                            class="block w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                            id="rollNumber" name="rollNumber" placeholder="Enter Roll Number" type="text" required
+                            maxlength="50" pattern="[a-zA-Z0-9-]+" autocomplete="off" />
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
+                            for="password">Password</label>
+                        <!-- BUG #4: Placeholder action for user login -->
+                        <a class="text-xs text-primary hover:underline" href="javascript:void(0)"
+                            onclick="showToast('Use the roll number hint for password logic.', 'success')">Forgot?</a>
+                    </div>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span
+                                class="material-icons text-slate-400 group-focus-within:text-primary transition-colors text-xl">lock</span>
+                        </div>
+                        <input
+                            class="block w-full pl-10 pr-12 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                            id="password" name="password" placeholder="Enter Password" type="password" required
+                            maxlength="100" autocomplete="off" />
+                        <button type="button" id="togglePassword"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-primary transition-colors">
+                            <span class="material-icons text-xl">visibility</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Multi-Scenario Error Container -->
+                <div id="loginErrorContainer"
+                    class="hidden p-3 rounded-lg bg-red-500/10 border border-red-500/20 flex items-start space-x-2 animate-pulse-subtle">
+                    <span class="material-icons text-red-500 text-sm mt-0.5">error_outline</span>
+                    <p id="loginErrorMessage" class="text-xs text-red-500 font-medium"></p>
+                </div>
+
+                <!-- Login Button -->
+                <button id="loginBtn"
+                    class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all shadow-lg shadow-primary/20"
+                    type="submit">
+                    <span>Secure Login</span>
+                    <span class="material-icons text-sm">login</span>
+                </button>
+
+                <!-- System Integrity Check Panel -->
+                <div class="pt-6 border-t border-slate-200 dark:border-slate-800 mt-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">System Integrity Check
+                        </h4>
+                        <span id="integrityPulse" class="flex h-2 w-2 relative">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                    </div>
+                    <div class="space-y-3">
+                        <!-- IP Field -->
+                        <div
+                            class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/80 rounded-lg border border-slate-200 dark:border-slate-800">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-icons text-slate-400 text-sm">public</span>
+                                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Public IP</span>
+                            </div>
+                            <span id="ipDisplay"
+                                class="text-xs font-mono font-semibold text-slate-700 dark:text-slate-300">Fetching...</span>
+                        </div>
+                        <!-- Status Badge -->
+                        <div
+                            class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/80 rounded-lg border border-slate-200 dark:border-slate-800">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-icons text-slate-400 text-sm">network_check</span>
+                                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Network
+                                    Status</span>
+                            </div>
+                            <span id="networkStatusBadge"
+                                class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-200 text-slate-600 border border-slate-300">
+                                Checking...
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Branded Footer -->
+        <footer class="mt-12 text-slate-500 text-sm flex flex-col items-center gap-4 px-6 text-center">
+            <div class="h-px w-24 bg-white/10 text-slate-200"></div>
+            <div class="flex flex-col items-center gap-2">
+                <!-- BUG #13: Removed duplicate verification text -->
+                <p>© Copyright Unlimited | Implementation by Surendra (IT2569)</p>
+                <div
+                    class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-primary/20 shrink-0">
+                    <span class="material-icons text-[12px]">verified</span>
+                    Verified
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="index.html"
+                    class="text-xs text-primary hover:underline uppercase tracking-widest flex items-center gap-1">
+                    <span class="material-icons text-sm">arrow_back</span>
+                    Back to Home
+                </a>
+            </div>
+            <p
+                class="text-center mt-4 text-[10px] text-slate-500 dark:text-slate-600 uppercase tracking-widest leading-loose">
+                AMS Security Protocol v4.2.0 | Managed by IT Dept
+            </p>
+        </footer>
+    </div>
+
+
+    <script src="js/security.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/geolocation.js"></script>
+    <script src="js/user.js"></script>
+    <script>
+        // Custom overrides for UI feedback
+        const originalFetchIP = window.fetchIP;
+        // We'll wrap or adapt the existing logic in user.js if needed, 
+        // but try to keep IDs consistent first.
+    </script>
+</body>
+
+</html>

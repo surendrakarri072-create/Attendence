@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>User Attendance Dashboard | AMS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,FILL@0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(19, 127, 236, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(19, 127, 236, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .btn-working {
+            background: rgba(19, 127, 236, 0.1) !important;
+            color: #137fec !important;
+            border: 1px solid rgba(19, 127, 236, 0.3) !important;
+            cursor: default !important;
+            animation: pulse-blue 2s infinite;
+        }
+
+        @keyframes pulse-blue {
+            0% {
+                box-shadow: 0 0 0 0 rgba(19, 127, 236, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(19, 127, 236, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(19, 127, 236, 0);
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+
+            #dashboardSection,
+            #dashboardSection * {
+                visibility: visible !important;
+            }
+
+            #dashboardSection {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .glass-panel {
+                border: none !important;
+                background: white !important;
+                color: black !important;
+                box-shadow: none !important;
+            }
+
+            table {
+                width: 100% !important;
+                border: 1px solid #eee !important;
+            }
+
+            th,
+            td {
+                padding: 10px !important;
+                border-bottom: 1px solid #eee !important;
+                color: black !important;
+            }
+
+            .filter-tabs,
+            button,
+            .shrink-0,
+            #attendanceOptions,
+            aside,
+            nav,
+            header {
+                display: none !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 glass-panel border-r border-slate-200 dark:border-white/10 hidden lg:flex flex-col">
+            <div class="p-6">
+                <div class="flex items-center gap-3 text-primary">
+                    <span class="material-icons-round text-3xl">verified_user</span>
+                    <span class="font-bold text-xl tracking-tight">AMS Portal</span>
+                </div>
+            </div>
+            <nav class="flex-1 px-4 space-y-2 mt-4" id="sidebarNav">
+                <a class="nav-link flex items-center gap-3 px-4 py-3 bg-primary text-white rounded-lg transition-all"
+                    href="#" data-section="dashboard">
+                    <span class="material-icons-round">dashboard</span>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a class="nav-link flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg transition-all"
+                    href="#" data-section="notifications">
+                    <span class="material-icons-round">notifications</span>
+                    <span class="font-medium">Notifications</span>
+                </a>
+                <a class="nav-link flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg transition-all"
+                    href="#" data-section="security">
+                    <span class="material-icons-round">security</span>
+                    <span class="font-medium">Security & IP</span>
+                </a>
+                <a class="nav-link flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg transition-all"
+                    href="#" data-section="performance">
+                    <span class="material-icons-round">analytics</span>
+                    <span class="font-medium">Performance</span>
+                </a>
+            </nav>
+            <div class="p-6 mt-auto">
+                <div class="glass-card p-4 rounded-xl border border-primary/20">
+                    <p class="text-xs text-slate-400 mb-1">Current IP</p>
+                    <p id="currentIpDisplay" class="text-sm font-mono text-primary">Fetching...</p>
+                </div>
+                <button id="logoutBtn"
+                    class="w-full mt-4 py-2 border border-slate-700 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto relative pb-32">
+            <!-- Top Header -->
+            <header
+                class="sticky top-0 z-10 glass-panel border-b border-white/5 px-8 py-4 flex items-center justify-between">
+                <div>
+                    <h1 id="welcomeUser" class="text-xl font-bold">Good morning, student</h1>
+                    <p id="rollNumberDisplay" class="text-sm text-slate-400">Roll No: -- • Computer Science Dept.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="headerNotificationBtn"
+                        class="relative p-2 text-slate-400 hover:text-white transition-colors">
+                        <span class="material-icons-round">notifications</span>
+                        <span
+                            class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-background-dark"></span>
+                    </button>
+                    <div id="headerProfileBtn"
+                        class="h-10 w-10 rounded-full border-2 border-primary/50 overflow-hidden bg-primary/20 cursor-pointer hover:border-primary transition-all">
+                        <img class="w-full h-full object-cover" data-alt="User profile portrait of a student"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD733sNJiKWgfZ2WZqH_cgl9fKDWdJe4GmHWE_UKEdIacVu34lboEH6W8UulPezQ_cZDDutqVER3jdujLh3jXBfMQtAr94TVN0PR4ZYxSpAlCsQo_P0G6hSN7ODes6uppCOYcJlze8m5MnM187hXMw-6Lv05M3-2KfO4neqmMTYXRsZUR0IDk8Plw-8MnBXPAxHpfAfnhA3BiATwIXYdoBdUyzpGFqVIVzpVfiyBmjTlpXZmabDJ61IULxlOtdGNU_Z45x8JLNnWDU5" />
+                    </div>
+                </div>
+            </header>
+
+            <div id="dashboardSection" class="p-8 max-w-7xl mx-auto space-y-8">
+                <!-- Status Bar Grid (Existing) -->
+                <!-- BUG #9: Improved responsive grid for stats cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <!-- Geofencing Status -->
+                    <div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+                        <div id="locationIcon"
+                            class="h-12 w-12 rounded-lg bg-slate-500/20 text-slate-500 flex items-center justify-center">
+                            <span class="material-icons-round">location_on</span>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Geofencing</p>
+                            <p id="locationMsg" class="text-lg font-bold text-slate-500">Checking...</p>
+                            <button id="verifyLocationBtn" class="text-[10px] text-primary hover:underline hidden">Retry
+                                Verification</button>
+                        </div>
+                    </div>
+                    <!-- IP Status -->
+                    <div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+                        <div id="ipIcon"
+                            class="h-12 w-12 rounded-lg bg-slate-500/20 text-slate-500 flex items-center justify-center">
+                            <span class="material-icons-round">router</span>
+                        </div>
+                        <div>
+                            <p class="text-tiny text-slate-400 uppercase tracking-wider font-semibold">IP Validation</p>
+                            <p id="ipMsg" class="text-lg font-bold text-slate-500">Checking...</p>
+                            <p class="text-tiny text-slate-500">Authorized System Only</p>
+                        </div>
+                    </div>
+                    <!-- Today's Work Time -->
+                    <div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+                        <div
+                            class="h-12 w-12 rounded-lg bg-slate-100/10 text-slate-400 flex items-center justify-center">
+                            <span class="material-icons-round">schedule</span>
+                        </div>
+                        <div>
+                            <p class="text-tiny text-slate-400 uppercase tracking-wider font-semibold">Today's Session
+                            </p>
+                            <p id="sessionTime" class="text-lg font-bold">--h --m</p>
+                            <p id="sessionStart" class="text-tiny text-slate-500">Activity today</p>
+                        </div>
+                    </div>
+                    <!-- Overall Attendance -->
+                    <div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+                        <div
+                            class="h-12 w-12 rounded-lg bg-amber-500/20 text-amber-500 flex items-center justify-center">
+                            <span class="material-icons-round">auto_graph</span>
+                        </div>
+                        <div>
+                            <p class="text-tiny text-slate-400 uppercase tracking-wider font-semibold">Overall Rate</p>
+                            <p id="attendanceRate" class="text-lg font-bold">--%</p>
+                            <p class="text-tiny text-slate-500">Target: 85%+</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Cards -->
+                <div id="attendanceOptions" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Clock In Card -->
+                    <div class="glass-panel p-8 rounded-2xl relative overflow-hidden group">
+                        <div class="absolute -right-12 -top-12 h-40 w-40 bg-primary/5 rounded-full blur-3xl"></div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h2 class="text-2xl font-bold mb-1">Clock In</h2>
+                                    <p id="clockInWindowText" class="text-slate-400 text-sm">Window: 01:00 PM — 03:00 PM
+                                    </p>
+                                </div>
+                                <span id="clockInStatusBadge"
+                                    class="bg-slate-500/20 text-slate-400 px-3 py-1 rounded-full text-xs font-bold uppercase">Pending</span>
+                            </div>
+                            <div class="flex flex-col items-center py-6">
+                                <span id="clockInIcon"
+                                    class="material-icons-round text-6xl text-slate-600 mb-4 transition-all">login</span>
+                                <p id="clockInHelpText" class="text-slate-300 text-center mb-6">Position yourself within
+                                    the office zone to mark attendance.</p>
+                                <!-- BUG #10: Standardized flex alignment -->
+                                <button id="clockInBtn"
+                                    class="w-full py-4 bg-slate-700 text-slate-400 font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 cursor-not-allowed"
+                                    disabled>
+                                    <span class="material-icons-round">fingerprint</span>
+                                    <span>CONFIRM ATTENDANCE</span>
+                                </button>
+                                <p id="lastClockInText" class="mt-4 text-tiny text-slate-500 uppercase font-medium">Last
+                                    check-in attempt: None today</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Attendance Heatmap/Distribution -->
+                    <div class="glass-panel p-6 rounded-2xl space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-tiny font-bold uppercase tracking-widest text-slate-500">Attendance
+                                Distribution</h3>
+                            <div class="flex items-center gap-2">
+                                <span class="text-tiny text-slate-500 uppercase font-bold">Activity:</span>
+                                <div class="flex gap-1">
+                                    <div class="w-2.5 h-2.5 bg-white/5 rounded-sm" title="No Activity"></div>
+                                    <div class="w-2.5 h-2.5 bg-primary/20 rounded-sm" title="Low"></div>
+                                    <div class="w-2.5 h-2.5 bg-primary/50 rounded-sm" title="Medium"></div>
+                                    <div class="w-2.5 h-2.5 bg-primary rounded-sm" title="High"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="attendanceHeatmap" class="grid grid-cols-7 gap-2">
+                            <!-- Heatmap dots generated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Clock Out Card -->
+                    <div class="glass-panel p-8 rounded-2xl relative overflow-hidden">
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h2 class="text-2xl font-bold mb-1">Clock Out</h2>
+                                    <p id="clockOutWindowText" class="text-slate-400 text-sm">Window: 01:00 PM — 04:00
+                                        PM</p>
+                                </div>
+                                <span id="clockOutStatusBadge"
+                                    class="bg-slate-500/20 text-slate-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Locked</span>
+                            </div>
+                            <div class="flex flex-col items-center py-6">
+                                <div class="relative mb-6">
+                                    <span id="clockOutIcon"
+                                        class="material-icons-round text-6xl text-slate-600 transition-all">logout</span>
+                                    <span id="clockOutLock"
+                                        class="material-icons-round absolute -bottom-1 -right-1 text-2xl text-amber-500">lock</span>
+                                </div>
+                                <div class="text-center">
+                                    <p id="clockOutTitle" class="text-slate-300 mb-2">Checkout available in:</p>
+                                    <div id="waitTimer" class="flex gap-2 justify-center mb-6 hidden">
+                                        <div class="bg-white/5 px-3 py-2 rounded-lg border border-white/5">
+                                            <span class="block text-2xl font-mono font-bold" id="waitHours">--</span>
+                                            <span class="text-[10px] uppercase text-slate-500">Hours</span>
+                                        </div>
+                                        <div class="bg-white/5 px-3 py-2 rounded-lg border border-white/5">
+                                            <span class="block text-2xl font-mono font-bold" id="waitMins">--</span>
+                                            <span class="text-[10px] uppercase text-slate-500">Mins</span>
+                                        </div>
+                                    </div>
+                                    <p id="clockOutStatusText" class="text-slate-400 mb-6 text-sm">Must Clock In and
+                                        complete minimum hours.</p>
+                                </div>
+                                <button id="clockOutBtn"
+                                    class="w-full py-4 bg-slate-700 text-slate-400 font-bold rounded-xl cursor-not-allowed transition-all"
+                                    disabled>
+                                    NOT AVAILABLE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance History Table -->
+                <div class="glass-panel rounded-2xl overflow-hidden">
+                    <div class="px-8 py-6 border-b border-white/5 flex items-center justify-between">
+                        <h3 class="text-lg font-bold">Recent Attendance History</h3>
+                        <div class="flex gap-2">
+                            <!-- BUG #6: Consistent styling for filter tabs and action buttons -->
+                            <div class="flex gap-1 bg-white/5 p-1 rounded-lg border border-white/10 shrink-0">
+                                <button
+                                    class="filter-btn active px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all"
+                                    data-status="">All</button>
+                                <button
+                                    class="filter-btn px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all text-slate-400 hover:text-white"
+                                    data-status="Clock In">In</button>
+                                <button
+                                    class="filter-btn px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all text-slate-400 hover:text-white"
+                                    data-status="Clock Out">Out</button>
+                            </div>
+                            <button onclick="downloadHistoryExcel()"
+                                class="px-4 py-2 bg-green-500/10 hover:bg-green-500/20 text-green-500 rounded-lg text-xs font-bold uppercase transition-all border border-green-500/20 shadow-sm flex items-center gap-2 no-print">
+                                <span class="material-icons-round text-sm">download</span>
+                                Excel
+                            </button>
+                            <button onclick="window.print()"
+                                class="px-4 py-2 bg-primary/20 hover:bg-primary/30 text-primary rounded-lg text-xs font-bold uppercase transition-all border border-primary/20 shadow-sm flex items-center gap-2 no-print">
+                                <span class="material-icons-round text-sm">print</span>
+                                Print
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="text-slate-400 text-sm uppercase tracking-wider bg-white/[0.02]">
+                                    <th class="px-8 py-4 font-semibold">Date & Time</th>
+                                    <th class="px-8 py-4 font-semibold">IP Address</th>
+                                    <th class="px-8 py-4 font-semibold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody" class="divide-y divide-white/5">
+                                <!-- History loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="notificationsSection" class="p-8 max-w-5xl mx-auto space-y-6 hidden">
+                <!-- Back Button -->
+                <button id="notifBackBtn" data-section="dashboard"
+                    class="nav-link flex items-center gap-2 px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium mb-2">
+                    <span class="material-icons-round text-lg">arrow_back</span>
+                    Back to Dashboard
+                </button>
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-2xl font-bold">Notification Center</h2>
+                    <button id="markAllReadBtn"
+                        class="text-sm font-semibold text-primary hover:underline flex items-center gap-2">
+                        <span class="material-icons-round text-sm">done_all</span>
+                        Mark all as read
+                    </button>
+                </div>
+                <div id="notificationList" class="space-y-4">
+                    <!-- Notifications loaded here -->
+                    <div class="glass-panel p-12 rounded-xl text-center">
+                        <span class="material-icons-round text-5xl text-slate-600 mb-4">notifications_off</span>
+                        <p class="text-slate-400">No new notifications</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security & IP Section -->
+            <div id="securitySection" class="p-8 max-w-5xl mx-auto space-y-8 hidden">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold">Security & System Access</h2>
+                    <button id="openRequestModalBtn"
+                        class="px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all">
+                        Request New IP Registration
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Current System Info -->
+                    <div class="md:col-span-2 glass-panel p-6 rounded-xl">
+                        <h3
+                            class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
+                            <span class="material-icons-round text-sm">devices</span>
+                            Active System Authorizations
+                        </h3>
+                        <div id="authorizedIpList" class="space-y-4">
+                            <!-- IP List loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Security Tips -->
+                    <div class="glass-panel p-6 rounded-xl border-l-4 border-amber-500">
+                        <h3 class="font-bold text-amber-500 mb-4 flex items-center gap-2">
+                            <span class="material-icons-round text-lg">security</span>
+                            Security Warning
+                        </h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Only register devices you own. Using public Wi-Fi or VPNs for attendance is strictly
+                            prohibited and can lead to account suspension.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Registration History -->
+                <div class="glass-panel rounded-xl overflow-hidden">
+                    <div class="px-6 py-4 border-b border-white/5 bg-white/[0.02]">
+                        <h3 class="font-bold">Request History</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="text-xs text-slate-500 uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-3">Submitted</th>
+                                    <th class="px-6 py-3">IP Address</th>
+                                    <th class="px-6 py-3">Status</th>
+                                    <th class="px-6 py-3">Admin Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestHistoryTable" class="divide-y divide-white/5 text-sm">
+                                <!-- Requests loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Section -->
+            <div id="performanceSection" class="p-8 max-w-5xl mx-auto space-y-8 hidden">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-2xl font-bold">Attendance Performance</h2>
+                    <div
+                        class="flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg border border-primary/20">
+                        <span class="material-icons-round text-sm">trending_up</span>
+                        <span id="attendanceRate" class="font-bold text-sm">--%</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Weekly Activity Heatmap -->
+                    <div class="glass-panel p-6 rounded-xl">
+                        <h3
+                            class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
+                            <span class="material-icons-round text-sm">calendar_month</span>
+                            Activity Heatmap (Last 30 Days)
+                        </h3>
+                        <div id="attendanceHeatmap" class="grid grid-cols-10 gap-2">
+                            <!-- Heatmap boxes loaded here -->
+                        </div>
+                        <div
+                            class="mt-6 flex items-center justify-between text-[10px] text-slate-500 uppercase font-bold">
+                            <span>Less active</span>
+                            <div class="flex gap-1">
+                                <div class="w-3 h-3 rounded-sm bg-white/5 border border-white/5"></div>
+                                <div class="w-3 h-3 rounded-sm bg-primary/20 border border-primary/10"></div>
+                                <div class="w-3 h-3 rounded-sm bg-primary/40 border border-primary/20"></div>
+                                <div class="w-3 h-3 rounded-sm bg-primary/60 border border-primary/30"></div>
+                                <div class="w-3 h-3 rounded-sm bg-primary border border-primary/40"></div>
+                            </div>
+                            <span>More active</span>
+                        </div>
+                    </div>
+
+                    <!-- Performance Insights -->
+                    <div class="glass-panel p-6 rounded-xl">
+                        <h3
+                            class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-6 flex items-center gap-2">
+                            <span class="material-icons-round text-sm">insights</span>
+                            Attendance Insights
+                        </h3>
+                        <div class="space-y-4">
+                            <div
+                                class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                <span class="text-sm text-slate-400">Punctuality Score</span>
+                                <span class="text-sm font-bold text-green-500">Excellent</span>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                <span class="text-sm text-slate-400">Total Days Present</span>
+                                <span class="text-sm font-bold text-white" id="totalDaysPresent">--</span>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                <span class="text-sm text-slate-400">Current Streak</span>
+                                <span class="text-sm font-bold text-amber-500">3 Days 🔥</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IP Request Modal -->
+            <div id="requestModal" class="fixed inset-0 z-[100] hidden">
+                <div class="absolute inset-0 bg-background-dark/80 backdrop-blur-md"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6">
+                    <div class="glass-panel rounded-2xl p-8 border border-white/10 shadow-2xl relative">
+                        <button id="closeModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                            <span class="material-icons-round">close</span>
+                        </button>
+                        <h2 class="text-2xl font-bold mb-6">New IP Authorization</h2>
+                        <form id="ipRequestForm" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Target IP
+                                    Address</label>
+                                <input type="text" id="reqIpAddress" readonly
+                                    class="w-full bg-slate-800 border-white/10 rounded-lg text-primary font-mono py-3" />
+                                <p class="text-[10px] text-slate-500 mt-1">Detected public IP of your current session.
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">System
+                                    Identifier</label>
+                                <input type="text" id="reqSystemId" placeholder="e.g., Personal Macbook Pro" required
+                                    class="w-full bg-white/5 border-white/10 rounded-lg focus:ring-primary py-3" />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Reason for
+                                    Access</label>
+                                <textarea id="reqJustification" rows="3"
+                                    placeholder="Explain why this system requires authorization..." required
+                                    class="w-full bg-white/5 border-white/10 rounded-lg focus:ring-primary py-3 px-4"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                                SUBMIT AUTHORIZATION REQUEST
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Decorative Gradients -->
+            <div class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
+                <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
+                <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
+            </div>
+            <!-- Branded Footer -->
+            <footer class="mt-12 pb-12 text-slate-500 text-sm flex flex-col items-center gap-4 px-6 text-center">
+                <div class="h-px w-24 bg-white/10"></div>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-3">
+                    <!-- BUG #12 & #13: Improved wrapping and removed duplication -->
+                    <p class="text-[11px] md:text-sm">© Copyright Unlimited | Implementation by Surendra (IT2569)</p>
+                    <div
+                        class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-primary/20 shrink-0">
+                        <span class="material-icons-round text-[12px]">verified</span>
+                        Verified
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Mobile Bottom Navigation -->
+            <nav
+                class="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] glass-panel rounded-2xl p-2 flex items-center justify-around z-50 border border-white/10 shadow-2xl">
+                <a href="#" data-section="dashboard"
+                    class="mobile-nav-link flex flex-col items-center gap-1 p-3 text-primary">
+                    <span class="material-icons-round">dashboard</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Dash</span>
+                </a>
+                <a href="#" data-section="notifications"
+                    class="mobile-nav-link flex flex-col items-center gap-1 p-3 text-slate-400">
+                    <span class="material-icons-round">notifications</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Inbox</span>
+                </a>
+                <a href="#" data-section="security"
+                    class="mobile-nav-link flex flex-col items-center gap-1 p-3 text-slate-400">
+                    <span class="material-icons-round">security</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Safe</span>
+                </a>
+                <a href="#" data-section="performance"
+                    class="mobile-nav-link flex flex-col items-center gap-1 p-3 text-slate-400">
+                    <span class="material-icons-round">analytics</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Stats</span>
+                </a>
+            </nav>
+        </main>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/geolocation.js"></script>
+    <script src="js/user.js"></script>
+</body>
+
+</html>

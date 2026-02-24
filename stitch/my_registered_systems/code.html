@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Registered Systems | AMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Navigation Header -->
+<header class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-icons">fingerprint</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight">AMS <span class="text-primary">Student</span></h1>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium">Alex Thompson</p>
+<p class="text-xs text-slate-500">Student ID: #2024-0891</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden border-2 border-primary/20">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Student profile picture in a circular frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASagiZJBweppJGDMagAGFOjAUDQFIcQWXuDgMZ1p0bSwKaPS3YGHEp3UNTt3CT9lnNDC8Zyn07Xf99vhX-vHvsOc34JUDtXp3SkcRvYnjvp-_TF35HPHLcT6lt0XCl5d__yKNhTEKe1IFPQg425DeJdHTvb8gW8CWNWYSayp75JVKcWcGDTMNliAZozHPji1loaeMrx4-rmP2Cqi65BcMdvdSHL7S2BUz1WEsdoxu62FDYUhTUiho9o6sgqRGuykfHQVkLXBYehGEr"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Hero/Instructional Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+<div class="lg:col-span-2 space-y-6">
+<header>
+<h2 class="text-3xl font-bold mb-2">My Registered Systems</h2>
+<p class="text-slate-500 dark:text-slate-400">Manage your network access points to ensure accurate attendance tracking from authorized locations.</p>
+</header>
+<!-- Current IP Registration Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-5">
+<div class="w-16 h-16 bg-primary/10 dark:bg-primary/20 text-primary rounded-full flex items-center justify-center">
+<span class="material-icons text-3xl">router</span>
+</div>
+<div>
+<p class="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Detected Network</p>
+<h3 class="text-2xl font-mono font-bold tracking-tighter">192.168.12.244</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
+<span class="material-icons text-xs text-green-500">location_on</span> Current Location: New York, USA
+                                </p>
+</div>
+</div>
+<div class="w-full md:w-auto">
+<button class="w-full md:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-icons">add_link</span>
+                                Request New IP Registration
+                            </button>
+</div>
+</div>
+<div class="px-6 py-3 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Your connection is currently stable and ready for registration.</span>
+</div>
+</div>
+</div>
+<!-- Instructional Sidebar -->
+<div class="lg:col-span-1">
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-6 h-full">
+<div class="flex items-center gap-2 text-primary mb-4">
+<span class="material-icons">info</span>
+<h3 class="font-bold">Why register?</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-icons text-primary text-sm mt-1">check_circle</span>
+<p class="text-sm text-slate-600 dark:text-slate-300"><strong class="text-slate-900 dark:text-white">Security:</strong> Prevents unauthorized individuals from checking in as you.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-icons text-primary text-sm mt-1">check_circle</span>
+<p class="text-sm text-slate-600 dark:text-slate-300"><strong class="text-slate-900 dark:text-white">Accuracy:</strong> Ensures you are physically present within the designated campus network area.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-icons text-primary text-sm mt-1">check_circle</span>
+<p class="text-sm text-slate-600 dark:text-slate-300"><strong class="text-slate-900 dark:text-white">Compliance:</strong> Meets the minimum attendance requirements for scholarship eligibility.</p>
+</li>
+</ul>
+<div class="mt-6 pt-6 border-t border-primary/20">
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+                            READ THE FULL POLICY <span class="material-icons text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Dashboard Content Tabs/Sections -->
+<div class="space-y-8">
+<!-- Active Systems -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-icons text-green-500">verified_user</span>
+                        Active Registrations
+                    </h3>
+<span class="px-2.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-xs font-bold">2 Active</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Active Card 1 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-slate-100 dark:bg-slate-800 p-2 rounded-lg">
+<span class="material-icons text-slate-400 group-hover:text-primary transition-colors">laptop_mac</span>
+</div>
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-green-500/10 text-green-500 border border-green-500/20 uppercase tracking-tight">Active</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Home Network (Workstation)</p>
+<h4 class="text-lg font-mono font-bold mt-1">72.14.213.102</h4>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-[11px] text-slate-400">Registered: Oct 12, 2023</span>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-icons text-lg">delete_outline</span>
+</button>
+</div>
+</div>
+<!-- Active Card 2 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-xl hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-slate-100 dark:bg-slate-800 p-2 rounded-lg">
+<span class="material-icons text-slate-400 group-hover:text-primary transition-colors">apartment</span>
+</div>
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-green-500/10 text-green-500 border border-green-500/20 uppercase tracking-tight">Active</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Campus Dormitory Wi-Fi</p>
+<h4 class="text-lg font-mono font-bold mt-1">10.42.0.55</h4>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-[11px] text-slate-400">Registered: Nov 05, 2023</span>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-icons text-lg">delete_outline</span>
+</button>
+</div>
+</div>
+<!-- Empty Placeholder -->
+<div class="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-center p-5 opacity-50 group hover:opacity-100 transition-all cursor-pointer">
+<div class="text-center">
+<span class="material-icons text-slate-400">add_circle_outline</span>
+<p class="text-xs font-bold mt-1">New Registration</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Request History -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-icons text-primary">history</span>
+                        Request History
+                    </h3>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Date Submitted</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">IP Address</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Status</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Admin Remarks</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">Jan 14, 2024</td>
+<td class="px-6 py-4 whitespace-nowrap font-mono font-semibold">192.168.12.244</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-tight">Pending</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-400 italic">Under review by Student Affairs...</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">Dec 20, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap font-mono font-semibold">45.72.11.9</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-red-500/10 text-red-500 border border-red-500/20 uppercase tracking-tight">Rejected</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-slate-200">
+<div class="flex items-start gap-2">
+<span class="material-icons text-red-500 text-sm mt-0.5">error_outline</span>
+<span>VPN detected. Please register using your native ISP connection.</span>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">Nov 05, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap font-mono font-semibold">10.42.0.55</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-green-500/10 text-green-500 border border-green-500/20 uppercase tracking-tight">Approved</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-400">Verified as Campus Resident Wi-Fi.</td>
+</tr>
+<tr>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">Oct 12, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap font-mono font-semibold">72.14.213.102</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-green-500/10 text-green-500 border border-green-500/20 uppercase tracking-tight">Approved</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-400">Home network verified.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+<!-- Help Footer -->
+<footer class="mt-16 pb-12 text-center border-t border-slate-200 dark:border-slate-800 pt-8">
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Having trouble with your IP registration? Our IT support team is here to help.</p>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="px-4 py-2 text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors flex items-center gap-2">
+<span class="material-icons text-base">support_agent</span>
+                    Contact Support
+                </button>
+<button class="px-4 py-2 text-sm font-semibold text-slate-500 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors flex items-center gap-2">
+<span class="material-icons text-base">help_outline</span>
+                    View FAQs
+                </button>
+</div>
+<p class="mt-8 text-xs text-slate-500/50 uppercase tracking-widest font-bold">AMS Version 4.2.0 • Secure Session</p>
+</footer>
+</main>
+<!-- Optional Float Bottom Hint for Small Screens -->
+<div class="fixed bottom-4 right-4 sm:hidden">
+<button class="w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center">
+<span class="material-icons">add</span>
+</button>
+</div>
+</body></html>

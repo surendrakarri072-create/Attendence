@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Profile &amp; Security Detail | AMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-hover:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+    body {
+      background-image: radial-gradient(circle at 0% 0%, rgba(19, 127, 236, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 100% 100%, rgba(19, 127, 236, 0.1) 0%, transparent 40%);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-7xl mx-auto px-4 py-8 lg:px-8">
+<!-- Header Navigation / Breadcrumb -->
+<header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<nav class="flex items-center text-sm text-slate-400 mb-2">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-icons text-xs mx-2">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Students</a>
+<span class="material-icons text-xs mx-2">chevron_right</span>
+<span class="text-slate-200">Profile Detail</span>
+</nav>
+<h1 class="text-3xl font-bold tracking-tight">Student Profile</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition-colors flex items-center gap-2 text-sm font-medium">
+<span class="material-icons text-lg">lock_reset</span>
+          Reset Password
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary hover:bg-primary/90 transition-colors text-white flex items-center gap-2 text-sm font-medium shadow-lg shadow-primary/20">
+<span class="material-icons text-lg">settings_ethernet</span>
+          Update IP Status
+        </button>
+</div>
+</header>
+<main class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Identity & Registered IPs -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Student Identity Card -->
+<section class="glass rounded-xl p-6 flex flex-col items-center text-center">
+<div class="relative mb-4">
+<img alt="Student Portrait" class="w-32 h-32 rounded-full border-4 border-primary/20 object-cover" data-alt="Young male student smiling for profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1bTLozS0j6iNJIu9X2YGqWyicFjt-LiROYbxx2HVNs0lzfSfWF5YCDLFxsN_bP3W_dmcfsr_PfMzTNzq-vBVDNEoQCcYmoPDunW7dxz-XBkLdIO4GvVBHqg6KIGMq_O4gZ3pZHZo3TWPvo3HIUgOQ3qMpn3wC1IgNRiuQslrUB8XmAnVPZFodLEegCsZOUtFes-gJCfZusuYKc4SaxGYJ3Cf7vZ9mD3_9odjlsct-c8-dyZYKRtkwhG0yKh1gTNCJxecmd2t7lExO"/>
+<span class="absolute bottom-1 right-2 w-5 h-5 bg-green-500 border-4 border-[#101922] rounded-full"></span>
+</div>
+<h2 class="text-xl font-bold">Alexander Wright</h2>
+<p class="text-slate-400 text-sm mb-4">Roll ID: #AMS-2024-8842</p>
+<div class="flex flex-wrap justify-center gap-2 mb-6">
+<span class="px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full uppercase tracking-wider border border-primary/30">Active Student</span>
+<span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-semibold rounded-full uppercase tracking-wider border border-slate-700">Senior Year</span>
+</div>
+<div class="w-full grid grid-cols-2 gap-4 text-left border-t border-white/5 pt-6">
+<div>
+<p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Enrollment</p>
+<p class="text-sm font-medium">Sept 12, 2021</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Attendance</p>
+<p class="text-sm font-medium text-primary">94.2% Rate</p>
+</div>
+</div>
+</section>
+<!-- Registered IPs Section -->
+<section class="glass rounded-xl p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-icons text-primary">dns</span>
+              Registered IPs
+            </h3>
+<button class="text-primary hover:underline text-xs font-medium">Add New</button>
+</div>
+<div class="space-y-4">
+<!-- IP Entry 1 -->
+<div class="flex items-center justify-between p-3 glass-hover rounded-lg transition-colors">
+<div>
+<p class="text-sm font-mono font-medium">192.168.1.104</p>
+<p class="text-[10px] text-slate-500">Home Network • Last used 2h ago</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- IP Entry 2 -->
+<div class="flex items-center justify-between p-3 glass-hover rounded-lg transition-colors">
+<div>
+<p class="text-sm font-mono font-medium">10.0.4.221</p>
+<p class="text-[10px] text-slate-500">Campus Library • Last used yesterday</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- IP Entry 3 (Inactive) -->
+<div class="flex items-center justify-between p-3 glass-hover rounded-lg transition-colors">
+<div>
+<p class="text-sm font-mono font-medium text-slate-500">172.16.254.1</p>
+<p class="text-[10px] text-slate-600">Public Coffee Shop • Disabled</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Attendance & Security Logs -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Attendance Visualization Card -->
+<section class="glass rounded-xl p-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+<h3 class="font-bold flex items-center gap-2 text-lg">
+<span class="material-icons text-primary">calendar_month</span>
+              Attendance Heatmap - October 2023
+            </h3>
+<div class="flex gap-4 text-xs font-medium">
+<div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-primary"></span> Present</div>
+<div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-amber-500"></span> Late</div>
+<div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-red-500"></span> Absent</div>
+<div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-slate-800"></span> Holiday</div>
+</div>
+</div>
+<div class="calendar-grid">
+<!-- Day labels -->
+<div class="text-center text-xs text-slate-500 font-bold py-1">MON</div>
+<div class="text-center text-xs text-slate-500 font-bold py-1">TUE</div>
+<div class="text-center text-xs text-slate-500 font-bold py-1">WED</div>
+<div class="text-center text-xs text-slate-500 font-bold py-1">THU</div>
+<div class="text-center text-xs text-slate-500 font-bold py-1">FRI</div>
+<div class="text-center text-xs text-slate-500 font-bold py-1">SAT</div>
+<div class="text-center text-xs text-slate-500 font-bold py-1">SUN</div>
+<!-- Calendar Days (Mocking Oct 2023) -->
+<div class="h-10 sm:h-14 glass rounded-lg flex flex-col items-center justify-center opacity-30 text-xs">25</div>
+<div class="h-10 sm:h-14 glass rounded-lg flex flex-col items-center justify-center opacity-30 text-xs">26</div>
+<div class="h-10 sm:h-14 glass rounded-lg flex flex-col items-center justify-center opacity-30 text-xs">27</div>
+<div class="h-10 sm:h-14 glass rounded-lg flex flex-col items-center justify-center opacity-30 text-xs">28</div>
+<div class="h-10 sm:h-14 glass rounded-lg flex flex-col items-center justify-center opacity-30 text-xs">29</div>
+<div class="h-10 sm:h-14 glass rounded-lg flex flex-col items-center justify-center opacity-30 text-xs">30</div>
+<!-- Start Oct 1 -->
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold border border-white/5">1</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold shadow-lg shadow-primary/30">2</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold shadow-lg shadow-primary/30">3</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold shadow-lg shadow-primary/30">4</div>
+<div class="h-10 sm:h-14 bg-amber-500 rounded-lg flex items-center justify-center text-xs font-bold shadow-lg shadow-amber-500/30">5</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">6</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">7</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">8</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">9</div>
+<div class="h-10 sm:h-14 bg-red-500 rounded-lg flex items-center justify-center text-xs font-bold shadow-lg shadow-red-500/30">10</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">11</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">12</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">13</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">14</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">15</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">16</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">17</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">18</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">19</div>
+<div class="h-10 sm:h-14 bg-amber-500 rounded-lg flex items-center justify-center text-xs font-bold">20</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">21</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">22</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">23</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">24</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">25</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">26</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">27</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">28</div>
+<div class="h-10 sm:h-14 bg-slate-800 rounded-lg flex items-center justify-center text-xs font-bold">29</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">30</div>
+<div class="h-10 sm:h-14 bg-primary rounded-lg flex items-center justify-center text-xs font-bold">31</div>
+</div>
+</section>
+<!-- Security Logs Tabbed Interface -->
+<section class="glass rounded-xl overflow-hidden">
+<div class="flex border-b border-white/10">
+<button class="px-6 py-4 text-sm font-bold text-primary border-b-2 border-primary">Security Logs</button>
+<button class="px-6 py-4 text-sm font-medium text-slate-400 hover:text-slate-200 transition-colors">Access History</button>
+<button class="px-6 py-4 text-sm font-medium text-slate-400 hover:text-slate-200 transition-colors">Audit Trail</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-white/5 uppercase text-[10px] font-bold tracking-widest text-slate-500">
+<tr>
+<th class="px-6 py-3">Timestamp</th>
+<th class="px-6 py-3">IP Address</th>
+<th class="px-6 py-3">Device / OS</th>
+<th class="px-6 py-3">Geo-Validation</th>
+<th class="px-6 py-3">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">Oct 24, 08:45 AM</div>
+</td>
+<td class="px-6 py-4 font-mono text-slate-300">192.168.1.104</td>
+<td class="px-6 py-4">Chrome / macOS</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-green-400">
+<span class="material-icons text-sm">location_on</span>
+                      Inside Perimeter
+                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20">Success</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">Oct 23, 09:12 AM</div>
+</td>
+<td class="px-6 py-4 font-mono text-slate-300">192.168.1.104</td>
+<td class="px-6 py-4">Chrome / macOS</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-green-400">
+<span class="material-icons text-sm">location_on</span>
+                      Inside Perimeter
+                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20">Success</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">Oct 22, 11:30 PM</div>
+</td>
+<td class="px-6 py-4 font-mono text-slate-300 text-red-400">178.45.21.9</td>
+<td class="px-6 py-4">Safari / iPhone</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-red-400">
+<span class="material-icons text-sm">wrong_location</span>
+                      Outside Range
+                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">Rejected</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="font-medium">Oct 22, 08:50 AM</div>
+</td>
+<td class="px-6 py-4 font-mono text-slate-300">10.0.4.221</td>
+<td class="px-6 py-4">Edge / Windows</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-green-400">
+<span class="material-icons text-sm">location_on</span>
+                      Inside Perimeter
+                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20">Success</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-white/5 text-center">
+<button class="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest flex items-center justify-center gap-2 mx-auto">
+              View All Logs
+              <span class="material-icons text-sm">expand_more</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Credits -->
+<footer class="mt-12 text-center text-slate-500 text-xs">
+<p>© 2024 Attendance Management System • Security Enhanced Profile View</p>
+<div class="mt-2 flex justify-center gap-4">
+<a class="hover:text-primary" href="#">System Health</a>
+<span>•</span>
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<span>•</span>
+<a class="hover:text-primary" href="#">Admin Guide</a>
+</div>
+</footer>
+</div>
+</body></html>

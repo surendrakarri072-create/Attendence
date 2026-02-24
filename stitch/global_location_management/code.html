@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Location Management | AMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "success": "#10b981",
+                        "error": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .map-container {
+            height: calc(100vh - 350px);
+            min-height: 400px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(19, 127, 236, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(19, 127, 236, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-screen-2xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-primary p-2 rounded-lg">
+<span class="material-icons text-white">hub</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">AMS <span class="text-primary">Global</span></h1>
+</div>
+<div class="flex-1 max-w-xl px-12 hidden md:block">
+<div class="relative group">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-slate-100 dark:bg-primary/5 border-transparent focus:border-primary focus:ring-0 rounded-lg pl-10 text-sm py-2 transition-all" placeholder="Search branches, coordinates, or IP ranges..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-primary/10 text-slate-500 dark:text-slate-400 relative">
+<span class="material-icons">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white dark:border-background-dark"></span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 mx-2"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-semibold">Admin User</p>
+<p class="text-[10px] text-primary uppercase font-bold tracking-widest leading-none">Super Admin</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary/20 object-cover" data-alt="User profile avatar portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5Cth5kPVpvPmBY1GK_3DnKrujYKzvIYJeZpJGUAZOJKS2WzvT7YnWK0VejndE4t2md5BsDeizxM7f2mJ9f7tIuTVwmiWTet0rfcWxqFh4VFLwtSnV0j_23iXZb-kTfXMt0xtm0vNTQPsWKgnl-g_Q4gOB32UX1zPAnqJUumjL-f4x7wpQ3QoZfOCVdlSoB1ns_Ban91A2KwqeTOoKvFu1YNCMW8JvDzC7sQAK1A1Feh0p5ex4EE5oo91_ef2-0nRQ2s1DV4qw6jgP"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-screen-2xl mx-auto px-6 py-8">
+<!-- Header Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h2 class="text-2xl font-bold">Location Management</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Configure and monitor global attendance nodes</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-slate-100 dark:bg-primary/10 p-1 rounded-lg flex">
+<button class="px-4 py-1.5 text-xs font-semibold bg-white dark:bg-primary text-primary dark:text-white rounded shadow-sm flex items-center gap-2">
+<span class="material-icons text-sm">grid_view</span> Grid
+                    </button>
+<button class="px-4 py-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-icons text-sm">map</span> Map
+                    </button>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm font-semibold transition-all shadow-lg shadow-primary/20">
+<span class="material-icons text-sm">add_location_alt</span>
+                    Add New Location
+                </button>
+</div>
+</div>
+<!-- Global Stats Strip -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total Branches</span>
+<span class="material-icons text-primary text-lg">corporate_fare</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold">14</span>
+<span class="text-[10px] text-success font-bold">+2 New</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Total Students</span>
+<span class="material-icons text-primary text-lg">people</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold">3,842</span>
+<span class="text-[10px] text-success font-bold">Active</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Global Health</span>
+<span class="material-icons text-success text-lg">check_circle</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold">98.2%</span>
+<span class="text-[10px] text-slate-400 font-bold">Optimal</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Sync Frequency</span>
+<span class="material-icons text-primary text-lg">sync_alt</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold">5s</span>
+<span class="text-[10px] text-slate-400 font-bold">Real-time</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Side: Interactive Map -->
+<div class="lg:col-span-8 space-y-6">
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+<h3 class="font-semibold text-sm">Live Operational Map</h3>
+</div>
+<div class="flex gap-4 text-[11px] uppercase tracking-wider font-bold text-slate-400">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-success"></span> Online</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-error"></span> Issues</span>
+</div>
+</div>
+<div class="map-container relative bg-slate-100 dark:bg-slate-900 flex items-center justify-center overflow-hidden">
+<!-- Simulated Map Background -->
+<div class="absolute inset-0 opacity-20 pointer-events-none">
+<div class="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent"></div>
+<div class="absolute top-0 left-0 w-full h-full opacity-30" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9kp45m3anq7_t4TP9MYEM7u7Ybu5SF2G25JBqaAvGKBI8b0Y1GZxp8oPqiBka_8mCPo7ey3E41Nw7oMF30mhq6Ac7CL4h5sGO_-cQ0sk92n5ksJPhzvLc5ragcKAqu8G19XYJEIJ0zpO7LG9uHYFsTlc0L9oIvwyzif9Lmpew0_8RmPFgGewy52-_e8B6ESSIVbLrOe5CB8QPMxW4sJMB2yg2Hh4M7LQvmsSmz1jAg9pjO4_DjQOIT3RmpasT-UisQT6w6mhObZlA')"></div>
+</div>
+<!-- Map Image Placeholder -->
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity" data-alt="Detailed dark mode world map with administrative boundaries" data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABsIk8zPSG0ELlwIof-hOuM2Y59tpRsXuwcM8eb9GdEe5KTsL_YuEuWj81az0NFf4cEEywddDdYP_N1dFDRP-pWrKrBHAhGjeK0V6VvkmDBATD_oZzB52Wxch3CCiwRgwmijsokPHieNzm7hHCvnk_Blgz6LDR4ZxctycPmNdmaNJi3sgFMYl37B-5vM44qmoZI4YOSyyedb02Qli0TI59mlKZFBPc-KwrBct5xZayyVHjuZGpNJVwJF2NTITEGrAw5QUscGZ_RTM0"/>
+<!-- Pins -->
+<!-- Pin 1: Kakinada -->
+<div class="absolute top-1/2 left-1/3 -translate-x-1/2 group cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="bg-white dark:bg-slate-800 p-1.5 rounded-lg shadow-xl mb-1 opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 translate-y-2 group-hover:translate-y-0">
+<p class="text-[10px] font-bold whitespace-nowrap px-1">Kakinada HQ</p>
+</div>
+<div class="w-8 h-8 bg-success/20 rounded-full flex items-center justify-center animate-ping absolute"></div>
+<div class="relative z-10 w-6 h-6 bg-success rounded-full border-2 border-white dark:border-slate-800 shadow-lg flex items-center justify-center">
+<span class="material-icons text-white text-xs">business</span>
+</div>
+</div>
+</div>
+<!-- Pin 2: Visakhapatnam -->
+<div class="absolute top-[45%] left-[38%] group cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="bg-white dark:bg-slate-800 p-1.5 rounded-lg shadow-xl mb-1 opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 translate-y-2 group-hover:translate-y-0">
+<p class="text-[10px] font-bold whitespace-nowrap px-1">Vizag Branch</p>
+</div>
+<div class="w-6 h-6 bg-success rounded-full border-2 border-white dark:border-slate-800 shadow-lg flex items-center justify-center">
+<span class="material-icons text-white text-xs">location_on</span>
+</div>
+</div>
+</div>
+<!-- Pin 3: Issues Pin -->
+<div class="absolute top-[60%] left-[45%] group cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="bg-white dark:bg-slate-800 p-2 rounded-lg shadow-xl mb-1 opacity-100 transition-all">
+<p class="text-[10px] font-bold text-error">Hyderabad: Geofence Offline</p>
+</div>
+<div class="relative z-10 w-6 h-6 bg-error rounded-full border-2 border-white dark:border-slate-800 shadow-lg flex items-center justify-center">
+<span class="material-icons text-white text-xs">warning</span>
+</div>
+</div>
+</div>
+<!-- Map Controls -->
+<div class="absolute bottom-6 right-6 flex flex-col gap-2">
+<button class="bg-white dark:bg-slate-800 p-2 rounded shadow-md hover:text-primary transition-colors">
+<span class="material-icons">add</span>
+</button>
+<button class="bg-white dark:bg-slate-800 p-2 rounded shadow-md hover:text-primary transition-colors">
+<span class="material-icons">remove</span>
+</button>
+<button class="bg-white dark:bg-slate-800 p-2 rounded shadow-md hover:text-primary transition-colors mt-2">
+<span class="material-icons">my_location</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Active Locations Detail Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-slate-800/50 border-l-4 border-l-success border border-slate-200 dark:border-slate-800 p-5 rounded-xl transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="font-bold text-lg">Kakinada HQ</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Main Campus - Building A &amp; B</p>
+</div>
+<span class="bg-success/10 text-success text-[10px] font-extrabold px-2 py-1 rounded-full uppercase tracking-tighter">Healthy</span>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<div>
+<p class="text-[10px] text-slate-400 font-semibold uppercase mb-1">Students</p>
+<p class="text-xl font-bold">1,240</p>
+</div>
+<div>
+<p class="text-[10px] text-slate-400 font-semibold uppercase mb-1">IP Security</p>
+<div class="flex items-center gap-1">
+<span class="material-icons text-success text-sm">verified_user</span>
+<span class="text-sm font-semibold">Active</span>
+</div>
+</div>
+<div>
+<p class="text-[10px] text-slate-400 font-semibold uppercase mb-1">Accuracy</p>
+<p class="text-sm font-bold text-success">98.5%</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
+<button class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+<span class="material-icons text-xs">edit_location</span> Edit Lat/Long
+                            </button>
+<button class="text-xs font-bold text-slate-500 hover:text-primary transition-colors">Logs &amp; History</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-slate-800/50 border-l-4 border-l-error border border-slate-200 dark:border-slate-800 p-5 rounded-xl transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="font-bold text-lg">Hyderabad Hub</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Cyber Towers, Level 4</p>
+</div>
+<span class="bg-error/10 text-error text-[10px] font-extrabold px-2 py-1 rounded-full uppercase tracking-tighter">System Alert</span>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<div>
+<p class="text-[10px] text-slate-400 font-semibold uppercase mb-1">Students</p>
+<p class="text-xl font-bold">856</p>
+</div>
+<div>
+<p class="text-[10px] text-slate-400 font-semibold uppercase mb-1">IP Security</p>
+<div class="flex items-center gap-1">
+<span class="material-icons text-error text-sm">gpp_maybe</span>
+<span class="text-sm font-semibold">Mismatch</span>
+</div>
+</div>
+<div>
+<p class="text-[10px] text-slate-400 font-semibold uppercase mb-1">Accuracy</p>
+<p class="text-sm font-bold text-error">42.1%</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
+<button class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+<span class="material-icons text-xs">settings_backup_restore</span> Reset Geofence
+                            </button>
+<button class="text-xs font-bold text-slate-500 hover:text-primary transition-colors">View Alert Details</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Action Panel & Recent Activity -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Add New Location Quick Form -->
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+<div class="p-6 bg-primary/5 dark:bg-primary/10 border-b border-slate-200 dark:border-slate-800">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-icons text-primary">add_circle</span>
+                            Quick Definition
+                        </h3>
+</div>
+<div class="p-6 space-y-4">
+<div>
+<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Branch Name</label>
+<input class="w-full bg-slate-50 dark:bg-background-dark border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="e.g. Bangalore North" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Latitude</label>
+<input class="w-full bg-slate-50 dark:bg-background-dark border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="17.3850" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Longitude</label>
+<input class="w-full bg-slate-50 dark:bg-background-dark border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="78.4867" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">IP Range (CIDR)</label>
+<input class="w-full bg-slate-50 dark:bg-background-dark border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary focus:border-primary" placeholder="192.168.1.0/24" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Geofence Radius (meters)</label>
+<select class="w-full bg-slate-50 dark:bg-background-dark border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary focus:border-primary">
+<option>50m</option>
+<option selected="">100m (Standard)</option>
+<option>250m</option>
+<option>500m</option>
+</select>
+</div>
+<button class="w-full bg-primary py-3 rounded-lg text-white text-sm font-bold shadow-lg shadow-primary/20 hover:brightness-110 transition-all mt-2">
+                            Initialize Location
+                        </button>
+</div>
+</div>
+<!-- System Audit Log -->
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-sm">Security Audit Log</h3>
+<button class="text-xs text-primary font-bold">View All</button>
+</div>
+<div class="space-y-6 custom-scrollbar max-h-[400px] pr-2 overflow-y-auto">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons text-success text-sm">lock_open</span>
+</div>
+<div>
+<p class="text-xs font-semibold">New IP range authorized</p>
+<p class="text-[10px] text-slate-400 mt-0.5">Visakhapatnam Branch • 2 mins ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons text-error text-sm">report_problem</span>
+</div>
+<div>
+<p class="text-xs font-semibold">Unauthorized access attempt</p>
+<p class="text-[10px] text-slate-400 mt-0.5">Hyderabad Hub • 14 mins ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+<span class="material-icons text-primary text-sm">edit_location</span>
+</div>
+<div>
+<p class="text-xs font-semibold">Geofence radius modified</p>
+<p class="text-[10px] text-slate-400 mt-0.5">Kakinada HQ • 1 hour ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center flex-shrink-0">
+<span class="material-icons text-slate-400 text-sm">history</span>
+</div>
+<div>
+<p class="text-xs font-semibold">Nightly audit report generated</p>
+<p class="text-[10px] text-slate-400 mt-0.5">System • 4 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- System Support -->
+<div class="bg-primary p-6 rounded-xl relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-white font-bold mb-2">Need Assistance?</h4>
+<p class="text-white/70 text-xs mb-4">Our dedicated technical team is available 24/7 for branch configuration issues.</p>
+<button class="bg-white text-primary px-4 py-2 rounded-lg text-xs font-bold hover:shadow-lg transition-all">
+                            Contact Support
+                        </button>
+</div>
+<span class="material-icons absolute -bottom-4 -right-4 text-white/10 text-8xl pointer-events-none">support_agent</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Summary -->
+<footer class="mt-12 border-t border-slate-200 dark:border-slate-800 py-8 bg-white dark:bg-background-dark/50">
+<div class="max-w-screen-2xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400 font-medium">AMS Global Infrastructure Platform</span>
+<span class="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+<span class="text-xs text-slate-400 font-medium">v2.4.0 (Stable)</span>
+</div>
+<div class="flex gap-6">
+<a class="text-xs text-slate-500 hover:text-primary font-medium transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs text-slate-500 hover:text-primary font-medium transition-colors" href="#">Security Standards</a>
+<a class="text-xs text-slate-500 hover:text-primary font-medium transition-colors" href="#">API Reference</a>
+</div>
+</div>
+</footer>
+</body></html>

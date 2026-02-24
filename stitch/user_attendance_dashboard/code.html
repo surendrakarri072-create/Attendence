@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Attendance Dashboard | AMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(19, 127, 236, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(19, 127, 236, 0.15);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 glass-panel border-r border-slate-200 dark:border-white/10 hidden lg:flex flex-col">
+<div class="p-6">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-icons-round text-3xl">verified_user</span>
+<span class="font-bold text-xl tracking-tight">AMS Portal</span>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary text-white rounded-lg transition-all" href="#">
+<span class="material-icons-round">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-icons-round">history</span>
+<span class="font-medium">Attendance Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-icons-round">analytics</span>
+<span class="font-medium">Performance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 hover:text-white rounded-lg transition-all" href="#">
+<span class="material-icons-round">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-6 mt-auto">
+<div class="glass-card p-4 rounded-xl border border-primary/20">
+<p class="text-xs text-slate-400 mb-1">Current IP</p>
+<p class="text-sm font-mono text-primary">192.168.43.112</p>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto relative">
+<!-- Top Header -->
+<header class="sticky top-0 z-10 glass-panel border-b border-white/5 px-8 py-4 flex items-center justify-between">
+<div>
+<h1 class="text-xl font-bold">Good morning, Alex Rivera</h1>
+<p class="text-sm text-slate-400">Roll No: CS2024-0429 • Computer Science Dept.</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-400 hover:text-white transition-colors">
+<span class="material-icons-round">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-background-dark"></span>
+</button>
+<div class="h-10 w-10 rounded-full border-2 border-primary/50 overflow-hidden bg-primary/20">
+<img class="w-full h-full object-cover" data-alt="User profile portrait of a student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD733sNJiKWgfZ2WZqH_cgl9fKDWdJe4GmHWE_UKEdIacVu34lboEH6W8UulPezQ_cZDDutqVER3jdujLh3jXBfMQtAr94TVN0PR4ZYxSpAlCsQo_P0G6hSN7ODes6uppCOYcJlze8m5MnM187hXMw-6Lv05M3-2KfO4neqmMTYXRsZUR0IDk8Plw-8MnBXPAxHpfAfnhA3BiATwIXYdoBdUyzpGFqVIVzpVfiyBmjTlpXZmabDJ61IULxlOtdGNU_Z45x8JLNnWDU5"/>
+</div>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Status Bar Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Geofencing Status -->
+<div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+<div class="h-12 w-12 rounded-lg bg-green-500/20 text-green-500 flex items-center justify-center">
+<span class="material-icons-round animate-pulse">location_on</span>
+</div>
+<div>
+<p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Geofencing</p>
+<p class="text-lg font-bold text-green-500">Within Range</p>
+<p class="text-[10px] text-slate-500">~ 320m from center</p>
+</div>
+</div>
+<!-- IP Status -->
+<div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+<div class="h-12 w-12 rounded-lg bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-icons-round">router</span>
+</div>
+<div>
+<p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">IP Validation</p>
+<p class="text-lg font-bold text-primary">Authorized</p>
+<p class="text-[10px] text-slate-500">Secure Institution Network</p>
+</div>
+</div>
+<!-- Today's Work Time -->
+<div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+<div class="h-12 w-12 rounded-lg bg-slate-100/10 text-slate-400 flex items-center justify-center">
+<span class="material-icons-round">schedule</span>
+</div>
+<div>
+<p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Today's Session</p>
+<p class="text-lg font-bold">1h 45m</p>
+<p class="text-[10px] text-slate-500">Logged since 09:12 AM</p>
+</div>
+</div>
+<!-- Overall Attendance -->
+<div class="glass-panel p-5 rounded-xl flex items-center gap-4">
+<div class="h-12 w-12 rounded-lg bg-amber-500/20 text-amber-500 flex items-center justify-center">
+<span class="material-icons-round">auto_graph</span>
+</div>
+<div>
+<p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Overall Rate</p>
+<p class="text-lg font-bold">94.2%</p>
+<p class="text-[10px] text-slate-500">Exceeds minimum (85%)</p>
+</div>
+</div>
+</div>
+<!-- Action Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Clock In Card (Active) -->
+<div class="glass-panel p-8 rounded-2xl relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 h-40 w-40 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="text-2xl font-bold mb-1">Clock In</h2>
+<p class="text-slate-400 text-sm">Window: 09:00 AM — 11:00 AM</p>
+</div>
+<span class="bg-green-500/20 text-green-500 px-3 py-1 rounded-full text-xs font-bold uppercase">Active</span>
+</div>
+<div class="flex flex-col items-center py-6">
+<span class="material-icons-round text-6xl text-primary mb-4">login</span>
+<p class="text-slate-300 text-center mb-6">System verified: You are currently on campus and using a secure connection.</p>
+<button class="w-full py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<span class="material-icons-round">fingerprint</span>
+                                    CONFIRM ATTENDANCE
+                                </button>
+<p class="mt-4 text-xs text-slate-500">Last check-in attempt: None today</p>
+</div>
+</div>
+</div>
+<!-- Clock Out Card (Inactive/Countdown) -->
+<div class="glass-panel p-8 rounded-2xl relative overflow-hidden opacity-80">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="text-2xl font-bold mb-1">Clock Out</h2>
+<p class="text-slate-400 text-sm">Window: 02:00 PM — 04:30 PM</p>
+</div>
+<span class="bg-slate-500/20 text-slate-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Locked</span>
+</div>
+<div class="flex flex-col items-center py-6">
+<div class="relative mb-6">
+<span class="material-icons-round text-6xl text-slate-600">logout</span>
+<span class="material-icons-round absolute -bottom-1 -right-1 text-2xl text-amber-500">lock</span>
+</div>
+<div class="text-center">
+<p class="text-slate-300 mb-2">Checkout available in:</p>
+<div class="flex gap-2 justify-center mb-6">
+<div class="bg-white/5 px-3 py-2 rounded-lg border border-white/5">
+<span class="block text-2xl font-mono font-bold">03</span>
+<span class="text-[10px] uppercase text-slate-500">Hours</span>
+</div>
+<div class="bg-white/5 px-3 py-2 rounded-lg border border-white/5">
+<span class="block text-2xl font-mono font-bold">12</span>
+<span class="text-[10px] uppercase text-slate-500">Mins</span>
+</div>
+<div class="bg-white/5 px-3 py-2 rounded-lg border border-white/5">
+<span class="block text-2xl font-mono font-bold">45</span>
+<span class="text-[10px] uppercase text-slate-500">Secs</span>
+</div>
+</div>
+</div>
+<button class="w-full py-4 bg-slate-700 text-slate-400 font-bold rounded-xl cursor-not-allowed" disabled="">
+                                    AVAILABLE AT 02:00 PM
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Attendance History Table -->
+<div class="glass-panel rounded-2xl overflow-hidden">
+<div class="px-8 py-6 border-b border-white/5 flex items-center justify-between">
+<h3 class="text-lg font-bold">Recent Attendance History</h3>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm font-medium transition-colors border border-white/10">Download Report</button>
+<button class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm font-medium transition-colors border border-white/10 flex items-center gap-2">
+<span class="material-icons-round text-sm">filter_list</span>
+                                Filter
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-slate-400 text-sm uppercase tracking-wider bg-white/[0.02]">
+<th class="px-8 py-4 font-semibold">Date</th>
+<th class="px-8 py-4 font-semibold">Clock In</th>
+<th class="px-8 py-4 font-semibold">Clock Out</th>
+<th class="px-8 py-4 font-semibold">Status</th>
+<th class="px-8 py-4 font-semibold">IP Address</th>
+<th class="px-8 py-4 font-semibold">Verification</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">Oct 24, 2023</td>
+<td class="px-8 py-5 font-mono text-slate-300">09:05 AM</td>
+<td class="px-8 py-5 font-mono text-slate-300">04:15 PM</td>
+<td class="px-8 py-5">
+<span class="bg-green-500/10 text-green-500 px-3 py-1 rounded-full text-xs font-medium">Present</span>
+</td>
+<td class="px-8 py-5 font-mono text-sm text-slate-400">192.168.1.104</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-icons-round text-sm">verified</span>
+<span class="text-xs">GPS &amp; IP Verified</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">Oct 23, 2023</td>
+<td class="px-8 py-5 font-mono text-slate-300">09:42 AM</td>
+<td class="px-8 py-5 font-mono text-slate-300">04:30 PM</td>
+<td class="px-8 py-5">
+<span class="bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full text-xs font-medium">Late Entry</span>
+</td>
+<td class="px-8 py-5 font-mono text-sm text-slate-400">192.168.1.104</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-icons-round text-sm">verified</span>
+<span class="text-xs">GPS &amp; IP Verified</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">Oct 22, 2023</td>
+<td class="px-8 py-5 font-mono text-slate-300">08:58 AM</td>
+<td class="px-8 py-5 font-mono text-slate-300">04:10 PM</td>
+<td class="px-8 py-5">
+<span class="bg-green-500/10 text-green-500 px-3 py-1 rounded-full text-xs font-medium">Present</span>
+</td>
+<td class="px-8 py-5 font-mono text-sm text-slate-400">192.168.4.22</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-icons-round text-sm">verified</span>
+<span class="text-xs">GPS &amp; IP Verified</span>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">Oct 21, 2023</td>
+<td class="px-8 py-5 font-mono text-slate-300">-- : --</td>
+<td class="px-8 py-5 font-mono text-slate-300">-- : --</td>
+<td class="px-8 py-5">
+<span class="bg-red-500/10 text-red-500 px-3 py-1 rounded-full text-xs font-medium">Absent</span>
+</td>
+<td class="px-8 py-5 font-mono text-sm text-slate-400">N/A</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1 text-slate-500">
+<span class="material-icons-round text-sm">error_outline</span>
+<span class="text-xs">No Data Found</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 border-t border-white/5 flex justify-center">
+<button class="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1">
+                            View Full Attendance Calendar
+                            <span class="material-icons-round text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Background Decorative Gradients -->
+<div class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
+<div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
+</div>
+</main>
+</div>
+</body></html>

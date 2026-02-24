@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Secure Login | AMS Student Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#137fec",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101922",
+              },
+              fontFamily: {
+                "display": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .bg-gradient-mesh {
+            background: radial-gradient(at 0% 0%, rgba(19, 127, 236, 0.15) 0px, transparent 50%),
+                        radial-gradient(at 100% 0%, rgba(19, 127, 236, 0.1) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(19, 127, 236, 0.05) 0px, transparent 50%),
+                        radial-gradient(at 0% 100%, rgba(19, 127, 236, 0.1) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4 bg-gradient-mesh">
+<div class="w-full max-w-md">
+<!-- Logo & Header -->
+<div class="text-center mb-8">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 mb-4 border border-primary/20">
+<span class="material-icons text-primary text-3xl">security</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Student Portal</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Verify your identity and network status</p>
+</div>
+<!-- Main Login Card -->
+<div class="bg-white dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl overflow-hidden">
+<!-- Unauthorized Alert Banner (Visible when IP fails) -->
+<div class="bg-red-500/10 border-b border-red-500/20 p-4 flex items-start space-x-3">
+<span class="material-icons text-red-500 text-sm mt-0.5">error_outline</span>
+<div>
+<h3 class="text-sm font-semibold text-red-500">Unauthorized System!</h3>
+<p class="text-xs text-red-400/80 mt-1">Login denied. Current IP: 192.168.45.102 is not registered in the geofencing whitelist.</p>
+</div>
+</div>
+<form class="p-8 space-y-6">
+<!-- Roll Number Input -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="roll-number">Roll Number</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-slate-400 group-focus-within:text-primary transition-colors text-xl">badge</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white placeholder:text-slate-400" disabled="" id="roll-number" name="roll-number" placeholder="Enter Roll Number" type="text"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="password">Password</label>
+<a class="text-xs text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-slate-400 group-focus-within:text-primary transition-colors text-xl">lock_open</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-slate-900 dark:text-white placeholder:text-slate-400" disabled="" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Login Button (Disabled Due to IP) -->
+<button class="w-full bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-600 font-semibold py-3 px-4 rounded-lg cursor-not-allowed flex items-center justify-center space-x-2 transition-all" disabled="" type="button">
+<span>Secure Login</span>
+<span class="material-icons text-sm">login</span>
+</button>
+<!-- System Integrity Check Panel -->
+<div class="pt-6 border-t border-slate-200 dark:border-slate-800 mt-6">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-xs font-bold uppercase tracking-widest text-slate-400">System Integrity Check</h4>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+</span>
+</div>
+<div class="space-y-3">
+<!-- IP Field -->
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/80 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center space-x-2">
+<span class="material-icons text-slate-400 text-sm">public</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Public IP</span>
+</div>
+<span class="text-xs font-mono font-semibold text-slate-700 dark:text-slate-300">192.168.45.102</span>
+</div>
+<!-- Status Badge -->
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/80 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center space-x-2">
+<span class="material-icons text-slate-400 text-sm">network_check</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Network Status</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-red-500/10 text-red-500 border border-red-500/20">
+                                Unauthorized
+                            </span>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Footer Info -->
+<p class="text-center mt-8 text-xs text-slate-500 dark:text-slate-600 uppercase tracking-widest leading-loose">
+            AMS Security Protocol v4.2.0<br/>
+            Managed by Institutional IT Department
+        </p>
+</div>
+<!-- Map/Location Contextual Image (Hidden background hint) -->
+<div class="fixed inset-0 -z-10 opacity-5 grayscale invert dark:invert-0 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="Technical network blueprint and map overlay" data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIa5ZXQtEJKS5agZJssAltnVY2DSAp1djE56f2zRCtmj_KGbe6Qo4GkIcbvICVahCG0pqwuHLLqnWHqjlmenrNDwBpt2iTqkVUnCBwNuNGkXsjm9wNXcWgiG5ILPlN3MNt5z-d1wADH75kJOllBMpv_Ezl-e2c049-5cW-wgyYsPT4RBjLO1X6Rgm_4QCQSrTfuG253HhGgDRo2Xx1OZXilO9DPT5TdqbhF1cx3c-jVFEcqTF8zrktvVno3PfMq-1_jt8BiwZLzSSo"/>
+</div>
+
+```</body></html>

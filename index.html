@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>AMS | Attendance Management System</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .bg-gradient-mesh {
+            background-color: #101922;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(19, 127, 236, 0.15) 0, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(19, 127, 236, 0.1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(19, 127, 236, 0.05) 0, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(19, 127, 236, 0.1) 0, transparent 50%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-8px);
+            border-color: rgba(19, 127, 236, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-mesh text-slate-100 min-h-screen flex flex-col items-center p-6 font-display">
+    <!-- Decorative Elements -->
+    <div
+        class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none">
+    </div>
+    <div
+        class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] pointer-events-none">
+    </div>
+
+    <div class="w-full max-w-4xl relative z-10 flex flex-col items-center mt-20">
+        <!-- Logo/Header -->
+        <div class="bg-primary/20 p-4 rounded-2xl mb-8 animate-float">
+            <span class="material-icons text-primary text-5xl">verified_user</span>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-center mb-4">
+            Attendance <span class="text-primary">Management</span> System
+        </h1>
+        <p class="text-slate-400 text-lg md:text-xl text-center mb-12 max-w-2xl px-4">
+            Secure, location-based attendance tracking with advanced IP authorization and geofencing integrity.
+        </p>
+
+        <!-- Role Selection Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
+            <!-- Student Portal -->
+            <a href="user-login.html" class="glass-panel p-8 rounded-3xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                        <span class="material-icons text-3xl group-hover:text-primary transition-colors">person</span>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2">Student Portal</h2>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Access your dashboard, mark attendance, and view your records securely.
+                    </p>
+                    <div
+                        class="mt-8 flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-wider group-hover:translate-x-2 transition-transform">
+                        Enter Portal <span class="material-icons text-sm">arrow_forward</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Admin Console -->
+            <a href="admin-login.html" class="glass-panel p-8 rounded-3xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                        <span class="material-icons text-3xl group-hover:text-primary transition-colors">security</span>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2">Admin Console</h2>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Manage users, approve IP requests, and monitor system security.
+                    </p>
+                    <div
+                        class="mt-8 flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-wider group-hover:translate-x-2 transition-transform">
+                        Access Control <span class="material-icons text-sm">arrow_forward</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <footer class="mt-20 pb-12 text-slate-500 text-sm flex flex-col items-center gap-4 w-full px-6">
+            <div class="h-px w-24 bg-white/10"></div>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-3 text-center">
+                <!-- BUG #13: Removed duplicate verification text -->
+                <p>© Copyright Unlimited | Implementation by Surendra (IT2569)</p>
+                <div
+                    class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-primary/20 shrink-0">
+                    <span class="material-icons text-[12px]">verified</span>
+                    Verified
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
